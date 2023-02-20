@@ -7,13 +7,13 @@ set -euo pipefail
 # - jq: https://stedolan.github.io/jq/download/
 
 # Make sure these values are correct for your environment
-resourceGroup="dm-catch-the-bus"
+resourceGroup="adi_azure_test"
 appName="dm-catch-the-bus"
 storageName="dmctb"
 location="WestUS2" 
 
 # Change this if you are using your own github repository
-gitSource="https://github.com/Azure-Samples/azure-sql-db-serverless-geospatial"
+gitSource="https://github.com/Aditibtp/azure-sql-db-serverless-geospatial"
 
 # Check that local.settings.json exists
 settingsFile="./local.settings.json"
