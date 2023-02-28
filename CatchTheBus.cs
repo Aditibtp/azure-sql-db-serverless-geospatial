@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace CatchTheBus
 {    
@@ -20,7 +21,8 @@ namespace CatchTheBus
         [FunctionName("ShowBusData")]
         public static async Task<IActionResult> ShowBusData([HttpTrigger("get", Route = "bus")] HttpRequest req, ILogger log)
         {        
-            var m = new BusDataManager(log);            
+            var m = new BusDataManager(log);
+            //var response = req.CreateResponse(HttpStatusCode.OK);
             return new OkObjectResult(await m.GetMonitoredBusData());
         }
 

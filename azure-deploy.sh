@@ -7,7 +7,7 @@ set -euo pipefail
 # - jq: https://stedolan.github.io/jq/download/
 
 # Make sure these values are correct for your environment
-resourceGroup="adi_azure_test"
+resourceGroup="adi_azure_test_app"
 appName="dm-catch-the-bus"
 storageName="dmctb"
 location="WestUS2" 
@@ -45,16 +45,7 @@ az storage account create \
     --sku Standard_LRS
 
 echo "Creating Function App...";
-az functionapp create \
-    -g $resourceGroup \
-    -n $appName \
-    --storage-account $storageName \
-    --app-insights-key $aikey \
-    --consumption-plan-location $location \
-    --deployment-source-url $gitSource \
-    --deployment-source-branch main \
-    --functions-version 3 \
-    --os-type Windows
+az functionapp create -g $resourceGroup -n $appName --storage-account $storageName --app-insights-key $aikey --consumption-plan-location $location --deployment-source-url $gitSource --deployment-source-branch main --functions-version 4 --os-type Windows --runtime dotnet --runtime-version 6
 
 echo "Configuring Settings...";
 settings=(RealTimeFeedUrl AzureSQLConnectionString)

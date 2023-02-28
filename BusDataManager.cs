@@ -54,13 +54,14 @@ namespace CatchTheBus
             // Find all the bus to be monitored
             var buses = feed.Entities.FindAll(e => monitoredRoutes.Contains(e.Vehicle.Trip.RouteId));
 
-            _log.LogInformation($"Found {buses.Count} in monitored routes");
+            _log.LogInformation($"Found {buses.Count} buses in monitored routes");
 
             await ProcessGeoFences(buses);
         }
 
         private async Task<GTFS.RealTime.Feed> DownloadBusData()
         {
+            //read these from redis
             var response = await _client.GetAsync(_busRealTimeFeedUrl);
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
@@ -71,6 +72,7 @@ namespace CatchTheBus
 
         private async Task<List<int>> GetMonitoredRoutes()
         {
+            //read these from redis
             using var conn = new SqlConnection(_connectionString);
             var result = await conn.QueryAsync<int>("web.GetMonitoredRoutes", commandType: CommandType.StoredProcedure);
             return result.ToList();
@@ -82,7 +84,7 @@ namespace CatchTheBus
             var busData = new JArray();
             buses.ForEach(b =>
             {
-                //_log.LogInformation($"{b.Vehicle.VehicleId.Id}: {b.Vehicle.Position.Latitude}, {b.Vehicle.Position.Longitude}");
+                _log.LogInformation($"logging feed information {b.Vehicle.VehicleId.Id}: {b.Vehicle.Position.Latitude}, {b.Vehicle.Position.Longitude}");
                 var d = new JObject
                 {
                     ["DirectionId"] = b.Vehicle.Trip.DirectionId,

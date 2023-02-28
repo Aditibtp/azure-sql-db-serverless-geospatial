@@ -27,12 +27,12 @@
         var current_shape = "point";
 
         var fill = new ol.style.Fill({
-            color: 'rgba(210, 122, 167,0.2)'
+            color: 'rgba(255, 255, 255,0.8)'
         });
 
         var stroke = new ol.style.Stroke({
             color: '#B40404',
-            width: 2
+            width: 8
         });
 
         var styles = [
@@ -46,6 +46,8 @@
                 stroke: stroke
             })
         ];
+
+        
       
         function init() {
             vector = new ol.layer.Vector({
@@ -61,14 +63,14 @@
                 layers: [raster, vector],
                 target: 'map',
                 view: new ol.View({
-                    center: [-11000000, 4600000],
-                    zoom: 4
+                    center: [-13578000, 6040500],
+                    zoom: 10.2
                 })
             });
             
-            $.getJSON("http://localhost:7071/api/bus", function(data)
+            $.getJSON("http://127.0.0.1:7071/api/bus", function(data)
                 {
-                    //console.log(data);
+                    console.log(data);
                     plotWKT(data.geometry);
                 }
             );                        
@@ -84,7 +86,7 @@
                 new_feature = format.readFeature(wkt_string);
             } catch (err) {}            
 
-            //console.log(new_feature);
+            console.log(new_feature);
 
             if (!new_feature) 
                 return;
