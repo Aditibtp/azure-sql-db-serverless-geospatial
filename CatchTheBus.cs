@@ -23,8 +23,10 @@ namespace CatchTheBus
         {        
             var m = new BusDataManager(log);
             //var response = req.CreateResponse(HttpStatusCode.OK);
-            return new OkObjectResult(await m.GetMonitoredBusData());
+            return new OkObjectResult(await m.GetMonitoredBusDataFromRedis());
         }
+
+
 
     }
 }
